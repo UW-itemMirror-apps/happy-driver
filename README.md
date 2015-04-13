@@ -14,7 +14,7 @@ of these platforms.
 
 Here are the dependencies that you need to install:
 
-- Git: This is used forj
+- Git: This is used for version control, and downloading the application as well as it's bower/npm dependencies
 - Node.js: This is used for the development environment, mostly grunt. It also installs npm, which will download app specific dependencies
 - Ruby: Required for compass
 - Compass: Compiles Sasss style files into CSS. This isn't needed to run, but the application will look wierd without it. On Windows in particular this can be challengin to install
