@@ -59,3 +59,11 @@ grunt serve
 If this fails, perhaps because of a missing dependency, see if you can't install it, but otherwise try `grunt serve --force`, which will ignore any erros or warnings. If you're missing a dependency.
 
 If everything works, then a new tab will pop up in your browser with the application. *Enable Pop Ups*, and then press start. A dropbox popup will ask for authentication, and then finally, the application should be showing the contents of your dropbox folder in the left pane.
+
+## Grunt Issues
+
+If grunt doesn't seem to work, here are some common issues that seem to be causing problems:
+
+1. Grunt isn't installed: Execute `grunt --version`, and you should get the version number of grunt. If not, then grunt hasn't been installed or *isn't in the execution path*, on Windows, this can be a bigger issue. Try powershell if it doesn't seem to be working
+2. Grunt is being executed from the wrong directory. Make sure that you're running grunt from within the `item-mirror-angular-demo` folder.
+3. Grunt-cli is installed, but /grunt/ isn't! When you run `grunt --version`, you should get two package versions, not one. One for grunt, and one for grunt-cli. If this isn't the case, then execute `npm install grunt`
