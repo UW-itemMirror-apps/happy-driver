@@ -1,116 +1,143 @@
-<div class="row">
-
+<div >
+  <div class="page-header">
+    <h3 class="no-margin disp-inline">Welcome to Happy Driver</h3>
+    <button class="btn-default btn btn-sm button-right disp-inline" ng-click="editSection = 'new-phantom'">Create</button>
+    <div class="clear-float"></div>
+  </div>
+  <!--Loading spinner-->
+  <div class="load-container absolute-load" ng-hide="associations">
+    <div class="loader">
+      Loading...
+    </div>
+    <div class="center">Loading...</div>
+  </div>
+  <div>
   <!-- Association Listing Section -->
-  <div class="col-md-4">
-    <h2>{{mirror.displayName}}</h2>
-
-  <button ng-click="previous()" class="btn btn-default btn-lg">Back</button>
-
-    <div class="scroll">
-      <div ng-repeat="assoc in associations | filter:search.displayText"
-           ng-click="select(assoc)">
-        <div class="association"
-             ng-style="{ 'background-color': assoc.customColor }"
-             ng-class="{'selected': assoc.selected}">
-          <div class="row">
-            <div class="col-md-2">
-              <span ng-show="assoc.isGrouping" class="glyphicon glyphicon-folder-close"></span>
-              <span ng-show="assoc.isPhantom" class="glyphicon glyphicon-link"></span>
-              <span ng-show="!assoc.isGrouping" class="glyphicon glyphicon-file"></span>
+    <div class="rides-info">
+      <div ng-repeat="assoc in associations | orderBy: '-yearVal' | orderBy: '-monthVal'">
+        <div class="association animate-show"
+             ng-class="{'selected': assoc.selected}"
+             ng-show="isCurMirrorReady[assoc.guid] && mirrorsAndAssocs[assoc.guid][1].length>0"
+             >
+          <div>
+            <div ng-click="select(assoc)">
+              <h3 ng-hide="assoc.isPhantom">{{ assoc.displayText }}</h3>
             </div>
-            <div class="col-md-10">
-              <h3>{{ matchFirstLn(assoc.displayText) }}</h3>
-              <a ng-show="assoc.isPhantom" ng-href="{{assoc.associatedItem}}">{{ assoc.associatedItem }}</a>
+            <div ng-show="assoc.isGrouping" class="ride-container">
+              <div ng-switch on="isCurMirrorReady[assoc.guid]">
+                <div ng-switch-when=true>
+                  <div ng-repeat="assocL1 in mirrorsAndAssocs[assoc.guid][1]  | orderBy: '-dayVal'" >
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h6 class="panel-title row">
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-3" >
+                            {{assocL1.monthVal}}/{{assocL1.dayVal}}/{{assocL1.yearVal}}
+                            <div ng-show="assocL1.isRepeat == 'repeated'" class="disp-inline">
+                             - {{assocL1.monthValEnd}}/{{assocL1.dayValEnd}}/{{assocL1.yearValEnd}}
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Arrive at {{assocL1.arrivalTime}}</div>
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">To {{assocL1.destination}}</div>
+                          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2"><span class="badge">{{assocL1.passengerNum}}P</span></div>
+                          <div ng-switch on="assocL1.selected">
+                            <div ng-switch-when=true>
+                              <button class="btn button-menu" ng-click="unExpand(assocL1)"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button>
+                            </div>
+                            <div ng-switch-default>
+                              <button class="btn button-menu" ng-click="expand(assocL1)"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
+                            </div>
+                          </div>
+                        </h6>
+                      </div>  
+                      <div class="animate-show2 panel-body" ng-show="assocL1.selected">   
+                        <div class="passenger-info"> 
+                          <!--passenger info title-->
+                          <div class="row passenger-info-title">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><strong>Pick-up Time</strong></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><strong>Name</strong></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><strong>Address</strong></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><strong>Phone No.</strong></div>
+                          </div>
+                          <!--passenger info-->
+                          <div class="row"  ng-show="assocL1.passengerName1 && (assocL1.passengerName1 != 'null')">
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.pickUpTime1}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerName1}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerAddr1}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerPhoneNo1}}</div>
+                          </div>
+                          <div class="row"  ng-show="assocL1.passengerName2 && (assocL1.passengerName2 != 'null')">
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.pickUpTime2}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerName2}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerAddr2}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerPhoneNo2}}</div>
+                          </div>
+                          <div class="row"  ng-show="assocL1.passengerName3 && (assocL1.passengerName3 != 'null')">
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.pickUpTime3}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerName3}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerAddr3}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerPhoneNo3}}</div>
+                          </div>
+                          <div class="row"  ng-show="assocL1.passengerName4 && (assocL1.passengerName4 != 'null')">
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.pickUpTime4}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerName4}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerAddr4}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerPhoneNo4}}</div>
+                          </div>
+                          <div class="row"  ng-show="assocL1.passengerName5 && (assocL1.passengerName5 != 'null')">
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.pickUpTime5}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerName5}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerAddr5}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerPhoneNo5}}</div>
+                          </div>
+                          <div class="row"  ng-show="assocL1.passengerName6 && (assocL1.passengerName6 != 'null')">
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.pickUpTime6}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerName6}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerAddr6}}</div>
+                            <div  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{assocL1.passengerPhoneNo6}}</div>
+                          </div> 
+                        </div>                                                                                                                       
+                        <div>
+                          <button class="btn btn-sm btn-default button-right" ng-click="select(assocL1)">Edit</button>
+                          <div class="clear-float"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--Show rides end-->
+                  </div>
+                </div>
+                <div ng-switch-when=undefined>Loading...</div>
+                <div ng-switch-default>Loading...</div>
+              </div>
             </div>
           </div> <!-- row -->
-          <div class="row buttons" ng-show="assoc.selected">
-            <!-- Buttons -->
-            <div class="col-md-6">
-              <button class="btn btn-default" ng-click="navigate(assoc.guid)" ng-show="assoc.isGrouping">Enter</button>
-            </div>
-            <div class="col-md-6">
-              <button ng-click="deleteAssoc(assoc.guid)" class="pull-right btn btn-danger">DELETE</button>
-            </div>
+        </div>
+      </div>
+      <!--Ride edit section-->
+      <!--In Happy Driver, only ride phantoms could be selected and editted-->
+      <div class="ride-edit well well-lg animate-show" ng-show="selectedAssoc && !selectedAssoc.isGrouping">
+        <div class="ride-edit-in well well-lg">
+          <div ng-if="selectedAssoc && !selectedAssoc.isGrouping">
+            <!--Use ng-directive to call ride-edit-form.html-->
+            <ride-edit-form></ride-edit-form>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="col-md-6" ng-switch on="editSection">
-    <button class="btn-default btn btn-lg"
-            ng-click="editSection = 'assoc-editor'">Association Editor</button>
-    <button class="btn-default btn btn-lg"
-            ng-click="editSection = 'new-phantom'">Create Phantom</button>
-    <button class="btn-default btn btn-lg"
-            ng-click="editSection = 'new-folder'">Create Folder</button>
-
-  <!-- Association Editing Section -->
-  <div ng-switch-when="assoc-editor" class="association-editor">
-    <p class="lead" ng-hide="selectedAssoc">
-      Select an association to the left in order to edit it!
-    </p>
-    <div ng-if="selectedAssoc">
-      <h2>Editor</h2>
-
-      <h3>{{selectedAssoc.localItem}}</h3>
-
-      <textarea ng-model="selectedAssoc.displayText"></textarea>
-
-      <h2>Tags</h2>
-        <input type="text" ng-model="tagValue">
-        <button ng-click="selectedAssoc.addTag(tagValue)"><span class="glyphicon glyphicon-plus"></span></button>
-      <h3>Current Tags</h3>
-      <div class="tag" ng-repeat="tag in selectedAssoc.listTags()">{{tag}}
-        <button ng-click="selectedAssoc.deleteTag(tag)">
-          <span class="glyphicon glyphicon-remove"></span>
-        </button>
-      </div>
-
-      <!-- Creates a binding to the custom namespace attribute -->
-      <input type="color"
-             ng-model="selectedAssoc.customColor"
-             ng-model-options="{ getterSetter: true }">
-
-      <!-- This button resets the color by setting the value to null -->
-      <button ng-click="selectedAssoc.customColor = null">Reset Color</button>
-    </div>
-  </div>
-
   <!-- Phantom Creation Section -->
-  <div ng-switch-when="new-phantom" class="phantom">
-    <h2>New Phantom</h2>
-      <form>
-        <label>Display Text</label>
-        <br/>
-        <textarea ng-model="phantomRequest.displayText"></textarea>
-        <br/>
-        <label>URL</label>
-        <br/>
-        <input ng-model="phantomRequest.itemURI" type="text">
-      </form>
-      <button ng-click="createPhantom()" class="btn btn-lg btn-default">Create</button>
+  <div class="ride-edit well well-lg animate-show" ng-show="editSection == 'new-phantom'" class="phantom">
+    <!--Use ng-directive to call ride-create-form.html-->
+    <ride-create-form></ride-create-form>
+  </div>
+  <!--Saving spinner-->
+  <div ng-show="loading.isLoading">
+    <div class="load-area well well-lg">
     </div>
-
-  <!-- Folder Creation Section -->
-  <div ng-switch-when="new-folder" class="folder">
-    <h2>New Folder</h2>
-      <form>
-        <label>Display Text</label>
-        <br/>
-        <textarea ng-model="folderRequest.displayText"></textarea>
-        <br/>
-        <label>Folder Name</label>
-        <br/>
-        <input ng-model="folderRequest.localItem" type="text">
-      </form>
-      <button ng-click="createFolder()" class="btn btn-lg btn-default">Create</button>
+    <div class="load-container">
+      <div class="loader">
+        {{loading.loadInfo}}
+      </div>
+      <div class="center">{{loading.loadInfo}}</div>
     </div>
   </div>
-
-  <div class="col-md-2">
-    <button ng-click="save()" class="btn btn-lg btn-success">Save</button>
-    <button ng-click="refresh()" class="btn btn-lg btn-success">Refresh</button>
-  </div>
-
-  </div>
+</div>

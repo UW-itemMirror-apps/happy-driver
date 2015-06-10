@@ -1,0 +1,238 @@
+<form>
+  <!--Carpool info-->
+  <div>  
+    <div>
+      <em><u>Carpool Info:</u></em>
+    </div>
+    <div>
+      <form action="">
+        <input type="radio" name="repeated" value="non-repeated" ng-model="selectedAssoc.isRepeat">Non-Repeated
+        <input type="radio" name="repeated" value="repeated" ng-model="selectedAssoc.isRepeat">Repeated
+      </form>
+    </div>  
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+        <select id="month_start" name="month_start" ng-model="selectedAssoc.monthVal" class="mymargin-monthstart" required>
+          <option value=''>Month</option>
+          <option value='01'>Jan</option>
+          <option value='02'>Feb</option>
+          <option value='03'>Mar</option>
+          <option value='04'>Apr</option>
+          <option value='05'>May</option>
+          <option value='06'>Jun</option>
+          <option value='07'>Jul</option>
+          <option value='08'>Aug</option>
+          <option value='09'>Sep</option>
+          <option value='10'>Oct</option>
+          <option value='11'>Nov</option>
+          <option value='12'>Dec</option>
+        </select> -
+        <select id="day_start" name="day_start" ng-model="selectedAssoc.dayVal" > 
+          <option value=''>Day</option>
+          <option ng-repeat="day in daysForMonth[selectedAssoc.monthVal]">{{day}}</option>
+        </select> -
+        <select id="year_start" name="year_start" ng-model="selectedAssoc.yearVal" required>   
+          <option value=''>Year</option>    
+          <option>2015</option>       
+          <option>2016</option>       
+          <option>2017</option>       
+          <option>2018</option> 
+          <option>2019</option>      
+        </select>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-7">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-1 mymargin-monthstart no-padding" ng-show="selectedAssoc.isRepeat == 'repeated'">
+         To
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" ng-show="selectedAssoc.isRepeat == 'repeated'">
+          <select id="month_end" name="month_end" ng-model="selectedAssoc.monthValEnd" class="mymargin-monthstart">
+            <option value=''>Month</option>
+            <option value='01'>Jan</option>
+            <option value='02'>Feb</option>
+            <option value='03'>Mar</option>
+            <option value='04'>Apr</option>
+            <option value='05'>May</option>
+            <option value='06'>Jun</option>
+            <option value='07'>Jul</option>
+            <option value='08'>Aug</option>
+            <option value='09'>Sep</option>
+            <option value='10'>Oct</option>
+            <option value='11'>Nov</option>
+            <option value='12'>Dec</option>
+          </select> -
+          <select id="day_end" name="day_end" ng-model="selectedAssoc.dayValEnd" > 
+            <option value=''>Day</option>
+            <option ng-repeat="day in daysForMonth[selectedAssoc.monthValEnd]">{{day}}</option>
+          </select> -
+          <select id="year_end" name="year_end" ng-model="selectedAssoc.yearValEnd">   
+            <option value=''>Year</option>    
+            <option>2015</option>       
+            <option>2016</option>       
+            <option>2017</option>       
+            <option>2018</option> 
+            <option>2019</option>      
+          </select>
+        </div>
+      </div>
+      <div class="row no-gutters form-group clear-float mymargin" >
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+          <input ng-model="selectedAssoc.arrivalTime" type="text" class="form-control" placeholder="Arrival Time - 00:00" >
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-7">
+          <input ng-model="selectedAssoc.destination" type="text" class="form-control" placeholder="Destination - (please enter your destination)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Passenger info-->
+  <div>
+    <div>
+        <em><u>Passenger Info:</u></em>
+    </div>
+    <div class="row no-gutters form-group">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <input ng-model="selectedAssoc.pickUpTime1" type="text" class="form-control" placeholder="Pick-up Time"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> 
+        <input ng-model="selectedAssoc.passengerName1" type="text" class="form-control" placeholder="Name"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <input ng-model="selectedAssoc.passengerAddr1" type="text" class="form-control" placeholder="Address"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">  
+          <input ng-model="selectedAssoc.passengerPhoneNo1" type="text" class="form-control nopadding" placeholder="Phone No."
+          ng-model-options="{ getterSetter: true }">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+          <button class="btn button-clear" ng-click="clearPassenger(1, 1)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="row no-gutters form-group">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <input ng-model="selectedAssoc.pickUpTime2" type="text" class="form-control" placeholder="Pick-up Time"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> 
+        <input ng-model="selectedAssoc.passengerName2" type="text" class="form-control" placeholder="Name"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <input ng-model="selectedAssoc.passengerAddr2" type="text" class="form-control" placeholder="Address"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">  
+          <input ng-model="selectedAssoc.passengerPhoneNo2" type="text" class="form-control nopadding" placeholder="Phone No."
+          ng-model-options="{ getterSetter: true }">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+          <button class="btn button-clear" ng-click="clearPassenger(1, 2)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="row no-gutters form-group">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <input ng-model="selectedAssoc.pickUpTime3" type="text" class="form-control" placeholder="Pick-up Time"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> 
+        <input ng-model="selectedAssoc.passengerName3" type="text" class="form-control" placeholder="Name"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <input ng-model="selectedAssoc.passengerAddr3" type="text" class="form-control" placeholder="Address"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">  
+          <input ng-model="selectedAssoc.passengerPhoneNo3" type="text" class="form-control nopadding" placeholder="Phone No."
+          ng-model-options="{ getterSetter: true }">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+          <button class="btn button-clear" ng-click="clearPassenger(1, 3)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+          <button class="btn button-clear" ng-hide="selectedAssoc.hasPassenger4 == 'true'" ng-click="selectedAssoc.hasPassenger4='true'"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>        
+        </div>
+      </div>
+    </div>    
+    <div class="row no-gutters form-group" ng-show="selectedAssoc.hasPassenger4 == 'true'">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <input ng-model="selectedAssoc.pickUpTime4" type="text" class="form-control" placeholder="Pick-up Time"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> 
+        <input ng-model="selectedAssoc.passengerName4" type="text" class="form-control" placeholder="Name"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <input ng-model="selectedAssoc.passengerAddr4" type="text" class="form-control" placeholder="Address"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">  
+          <input ng-model="selectedAssoc.passengerPhoneNo4" type="text" class="form-control nopadding" placeholder="Phone No."
+          ng-model-options="{ getterSetter: true }">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+          <button class="btn button-clear" ng-click="clearPassenger(1, 4)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+          <button class="btn button-clear" ng-hide="selectedAssoc.hasPassenger5 == 'true'" ng-click="selectedAssoc.hasPassenger5='true'"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>        
+        </div>
+      </div>
+    </div>   
+    <div class="row no-gutters form-group" ng-show="selectedAssoc.hasPassenger5 == 'true'">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <input ng-model="selectedAssoc.pickUpTime5" type="text" class="form-control" placeholder="Pick-up Time"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> 
+        <input ng-model="selectedAssoc.passengerName5" type="text" class="form-control" placeholder="Name"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <input ng-model="selectedAssoc.passengerAddr5" type="text" class="form-control" placeholder="Address"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">  
+          <input ng-model="selectedAssoc.passengerPhoneNo5" type="text" class="form-control nopadding" placeholder="Phone No."
+          ng-model-options="{ getterSetter: true }">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+          <button class="btn button-clear" ng-click="clearPassenger(1, 5)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+          <button class="btn button-clear" ng-hide="selectedAssoc.hasPassenger6 == 'true'" ng-click="selectedAssoc.hasPassenger6='true'"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>        
+        </div>
+      </div>
+    </div> 
+    <div class="row no-gutters form-group" ng-show="selectedAssoc.hasPassenger6 == 'true'">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <input ng-model="selectedAssoc.pickUpTime6" type="text" class="form-control" placeholder="Pick-up Time"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> 
+        <input ng-model="selectedAssoc.passengerName6" type="text" class="form-control" placeholder="Name"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <input ng-model="selectedAssoc.passengerAddr6" type="text" class="form-control" placeholder="Address"
+        ng-model-options="{ getterSetter: true }">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">  
+          <input ng-model="selectedAssoc.passengerPhoneNo6" type="text" class="form-control nopadding" placeholder="Phone No."
+          ng-model-options="{ getterSetter: true }">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+          <button class="btn button-clear" ng-click="clearPassenger(1, 6)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div> 
+  </div>
+</form>
+<button ng-click="cancelEdit()" class="btn btn-sm btn-default button-right">Cancel</button>
+<button ng-click="deleteRide(selectedAssoc)" class="btn btn-sm btn-default button-right">Delete Ride</button>
+<button ng-click="saveEdit(selectedAssoc)" class="btn btn-sm btn-default button-right">Save Edit</button>
+<div class="clear-float"></div>
