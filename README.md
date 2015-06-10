@@ -1,69 +1,13 @@
-# Installation
-
-## Machine Dependencies
-
-There are two types of installations that need to be performed in order for
-everything to work. There are the dependencies of the application itself, and
-there are dependencies that are needed to actually install the dependencies.
-
-These only need to be installed once on the machine you're developing on, and it's finished
-for good. However, it can be tricky to do this initially, and the process for installation
-may vary depending on your operating system. It seems to be *most difficult* to install everything
-on Windows. On Linux / OSX, the process seems to be a bit easier, so if possible, use one
-of these platforms.
-
-Here are the dependencies that you need to install:
-
-- Git: This is used for version control, and downloading the application as well as it's bower/npm dependencies
-- Node.js: This is used for the development environment, mostly grunt. It also installs npm, which will download app specific dependencies
-- Ruby: Required for compass
-- Compass: Compiles Sasss style files into CSS. This isn't needed to run, but the application will look wierd without it. On Windows in particular this can be challengin to install
-- Grunt-Cli: This is installed with npm, but globally rather than locally. Install this with `npm install -g grunt-cli` or `sudo npm install -g grunt-cli` depending on your platform.
-- Bower: This is also installed like grunt-cli, it allows you to run the `bower` command. Install with `npm install -g bower` or `sudo npm install -g bower` depending on your platform.
-
-These all only need to be installed once, and then they will persist on that machine permanantly until they are uninstalled. It may be painful, but luckily you only have to do it it once, and the functionality that these provide more than make up for the tough installation process.
-
-## Application Dependencies
-
-Now that you're  computer can run everything, it's time to install the application, and get it to a running state
-
-First clone the application onto your local machine with git:
-
-```bash
-git clone https://github.com/UW-itemMirror-apps/item-mirror-angular-demo.git
-```
-
-This creates a new folder with the application. You now need to go into this directory.
-
-```bash
-cd item-mirror-angular-dems
-```
-
-Now within this folder, you have need to install several dependencies from npm and bower.
-
-```
-npm install
-bower install
-```
-
-Executing these commands will install dependencies for the application. If bower seems to hang and never end, you may
-have to enter your GitHub credentials. the reason is because you're downloading the ItemMirror library, which is private
-and therefor requires authentication.
-
-After doing this, everything should be installed, and the application will run by executing the following:
-
-```bash
-grunt serve
-```
-
-If this fails, perhaps because of a missing dependency, see if you can't install it, but otherwise try `grunt serve --force`, which will ignore any erros or warnings. If you're missing a dependency.
-
-If everything works, then a new tab will pop up in your browser with the application. *Enable Pop Ups*, and then press start. A dropbox popup will ask for authentication, and then finally, the application should be showing the contents of your dropbox folder in the left pane.
-
-## Grunt Issues
-
-If grunt doesn't seem to work, here are some common issues that seem to be causing problems:
-
-1. Grunt isn't installed: Execute `grunt --version`, and you should get the version number of grunt. If not, then grunt hasn't been installed or *isn't in the execution path*, on Windows, this can be a bigger issue. Try powershell if it doesn't seem to be working
-2. Grunt is being executed from the wrong directory. Make sure that you're running grunt from within the `item-mirror-angular-demo` folder.
-3. Grunt-cli is installed, but /grunt/ isn't! When you run `grunt --version`, you should get two package versions, not one. One for grunt, and one for grunt-cli. If this isn't the case, then execute `npm install grunt`
+# Overview
+Our individual Single Page application is called “Happy Driver,” which is a ride information management tool. There are many existing websites and applications designed for drivers who look for riders, but there is no application providing service that can help drivers to manage those scattered carpooling requests. Based on our user research, we found that drivers often chose to use Google calendar to record and manage rides; however, they complained that calendar does not have the appropriate format designed only for recording ride’s information. For solving their problems, we initiated, designed and developed Happy Driver application. It allows users to integrate and manage carpooling ride schedules collected from various carpooling platforms.
+# Targeting Users
+Our targeting users are drivers who frequently use carpooling services. For providing better user experience, we designed the ride creation form with a straightforward format. In the ride creation form, we only include necessary informations that are useful in carpooling, which are carpooling date, time, destination, and a list of passenger’s information. We use clear labels to clarify where a certain piece of  information should be typed in. Moreover, we used placeholders to indicate what information should be filled into certain cell. Another benefit of using placeholders is to reduce amount of text on our application and provide simple form format; so that, users can save time on recording ride’s information. Considering that carpooling can be repeated activity, we added a functionality that allows users to choose an option from “Non-Repeated” or “Repeated” to meet their needs. Based on the default setting, users can enter three passengers’ contact information; however, they can use the “+” button to add up to six passengers for each ride. The rationale behind this design is that most carpooling drivers own sedan, which has five seats in total including driver. 
+Happy Driver is built using itemMirror, AngularJS and Bootstrap. All of the data are stored in Dropbox under a folder named “happy-driver”. In this way, Happy Driver associates with only one certain folder in user’s Dropbox, which is helpful for user to organize information and share with his/her passengers. By building on the top of Dropbox and itemMirror, users working from different devices and OS platforms can collaboratively use Happy Driver. But it is highly recommended that only the driver create and edit the rides,  and share them to his passengers.
+Folders labeled with month are created, and rides are phantoms organized in month folders. When creating a ride, the target folder of month is found according to the date of the ride, and then a phantom will be created in that folder; so that, Happy Driver can automatically categorize a ride into the correct month folder based on the carpooling date entered by a user. By having this feature, each ride can be saved into the corresponding month folder. If a user changes a ride date from May to June, Happy Drive can move this ride into June folder. This feature can definitely help users save a lot of time of organizing rides.
+# User Experience
+The overall interface design uses mint green, light grey, and white colors, which bring a very fresh and clean look, helping users to focus on information. Responsive design is implemented too; so that Happy Driver can have a readable interface, no matter what devices are used to access it. Another important design on application’s main page is that we added a passenger indicator for each ride, which is “xP” in a ellipse. “P” represents Passenger, and number “x” showing in front of P indicates how many passengers are in certain ride. Users can use this indicator to find out the number of passengers without clicking on the ride and looking at detailed information. Moreover, we added spinners for all waiting moments. For example, user may need to wait for seconds for a new ride being saved when the Internet is slow; in this waiting period, he can see a spinner telling him the application is saving the ride’s information for him. Overall, the layout of Happy Driver is very intuitively, and users do not need any special training to use Happy Driver.   
+# Features of Happy Driver:
+Priority 1: (1)Create a ride as a phantom and organized it to a folder based on its date.  (2) Edit a ride. (3) Enable users to delete a ride. (4) Show or hide passengers’ information when clicking the button beside carpool information on the list. (5) Display all of the rides in different folders on the homepage so that users do not need to open a certain folder to review rides in that month. (6) Present a clear hierarchy of months and rides of each month. (7) Order the rides by date so that the most up to date ones are on the top.
+Priority 2: (1) Enable users to add extra passengers by clicking the “+” button. (2) Clear all of the information of a certain passenger when a user clicks the “x” button beside the passenger. (3) If there is no existed folder of a month that a ride should be categorized to, Happy Driver can create the folder before create the ride phantom automatically. (4) Move the ride phantom to a correct folder automatically when the month of the ride has been changed.
+Priority 3: (1) Implement responsive design so that users can also have good experience using this application via mobile devices.
+All of the features are all fully implemented so far. 
