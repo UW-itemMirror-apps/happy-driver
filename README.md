@@ -1,3 +1,5 @@
+# !Important: Please create a folder named "happy-driver" on your Dropbox to get this application to work.
+
 # Overview
 
 Our individual Single Page application is called “Happy Driver,” which is a ride information management tool. There are many existing websites and applications designed for drivers who look for riders, but there is no application providing service that can help drivers to manage those scattered carpooling requests. Based on our user research, we found that drivers often chose to use Google calendar to record and manage rides; however, they complained that calendar does not have the appropriate format designed only for recording ride’s information. For solving their problems, we initiated, designed and developed Happy Driver application. It allows users to integrate and manage carpooling ride schedules collected from various carpooling platforms.
